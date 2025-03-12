@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca</title>
+    <link href="../static/css/index.css" rel="stylesheet" />
+    <script src="../static/js/index.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1 class="title">Biblioteca IBM-BeJob-Fundae</h1>
+      <nav class="nav__header">
+        <ul class="text-2x">
+          <li>
+            <a onclick="mostrarCanvas()">Agregar libro</a>
+          </li>
+          <li>
+            <a onclick="listarLibros()">Mostrar libros</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <tabla-libros></tabla-libros>
+      <section id="myCanvas" class="myCanvas" style="display: none">
+        <div class="canvas__content">
+          <div class="canvas__header">
+            <h2>Agregar Libro</h2>
+          </div>          
+          <div class="canvas__body">
+            <form id="myForm">
+              <fieldset>
+                <legend>Libro</legend>
+                  <div>
+                    <label for="isbn">ISBN:</label>
+                    <input type="text" id="isbn" name="isbn" onblur="buscarLibroPorIsbnEvent(event)"  required />
+                  </div>
+                  <div>
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" name="titulo" required />
+                  </div>
+                  <div>
+                    <label for="autor">Autor:</label>
+                    <input type="text" id="autor" name="autor" required />
+                  </div>
+                  <div>
+                    <label for="disponible">Disponible:</label>
+                    <select id="disponible" name="disponible">                      
+                      <option value="">Seleccione una opción</option>
+                      <option value="true">Sí</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+            </fieldset>
+            </form>
+          </div>
+          <div class="canvas__footer">
+            <button id="salir" class="btn cancel" onclick="ocultarCanvas()">Salir</button>
+            <button id="guardarLibro" class="btn success">Guardar</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <h3>Realizado por: <span class="flag">Daniel Jiménez</span></h3>
+      <p>Programa IBM-Skill-Building</p>
+    </footer>
+  </body>
+</html>

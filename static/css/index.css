@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px  solid black;
+  cursor: pointer;
+  width: 40%;
+}
+
+
+
+.success {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+
+}
+
+.cancel {
+  background-color: red;
+  color: white;
+  font-weight: bold;  
+}
+
+html {
+  height: 100vh; 
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  top: 0;
+  width: 100%;
+  height: 15%;
+
+  .title {
+    background-color: #0a0a23;
+    width: 100%;
+  }
+}
+
+.text-2x {
+  font-size: 1.2rem;
+}
+
+.nav__header {
+  ul {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    column-gap: 10px;
+    margin-top: 3px;
+  }
+
+  li {
+    border: 1px solid #0a0a23;
+    background-color: #e5e7eb;
+  }
+
+  a {
+    text-decoration: none;
+    padding: 0 3px;
+  }
+
+  a:hover {
+    color: #e5e7eb;
+    background-color: #0a0a23;
+    cursor: pointer;
+  }
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  height: 75%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.opciones {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  background-color: #0a0a23;
+  color: white;
+}
+
+.flag {
+  background: linear-gradient(
+    180deg,
+    #ffcc00 33%,
+    #00247d 33% 47%,
+    white 47% 52%,
+    #00247d 52% 66%,
+    #cf142b 66%
+  );
+  background-size: cover;
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.myCanvas{
+  color:#0a0a23;  
+  
+
+  .canvas__content{
+    margin-top: 30px;
+    border: 2px solid #0a0a23;
+    border-radius: 15px;
+    width: 75%;
+    justify-self: center;    
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  }
+
+  .canvas__header{
+    text-align: center;
+    background-color: #0a0a23;
+    color: white;
+    border-radius: 15px 15px 0 0;    
+  }
+  
+  .canvas__body{
+    padding: 15px;
+    font-size: 1.2rem;
+    
+    input{
+      height: 1.3rem;
+      border: 1px dashed #0a0a23;            
+    }
+  }
+
+  .canvas__footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+fieldset{
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  margin: 15px 0;
+  background-color: #e5e7eb;
+  border: 1px solid #0a0a23;
+  border-radius: 5px;
+  padding: 10px;
+  align-self: center;
+
+  legend{
+    text-align: center;
+    margin: 15px 0;
+  }
+}
+
