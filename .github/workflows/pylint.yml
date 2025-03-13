@@ -10,17 +10,20 @@ jobs:
         python-version: ["3.10"]
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pylint
+          pip install Flask #Añadir las dependencias del proyecto.
+           
       - name: Analysing the code with pylint
-        working-directory: "ibmskill/project with flash"
-        run: |
-          find . -name "__init__.py" -exec touch {} \;
+        run: |          
           pylint .
+
 
