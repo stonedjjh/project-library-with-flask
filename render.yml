@@ -1,0 +1,15 @@
+services:
+  book-service:
+    type: web
+    env:
+      - PORT=5001
+    image: danieljimenez982/book-service:latest
+
+  bff:
+    type: web
+    env:
+      - PORT=10000
+      - URL_BASE_BOOK_SERVICE=http://book-service:5001/api/v1/libros
+    image: danieljimenez982/bff:latest
+    depends_on:
+      - book-service
