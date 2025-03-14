@@ -140,7 +140,7 @@ class TablaLibros extends HTMLElement {
       // Eliminar el event listener anterior si existe
       searchInput.oninput = null;
 
-      searchInput.addEventListener("input", (event) => {
+      searchInput.addEventListener("input", (event) => {        
         this.searchTerm = event.target.value;
         this.filterData(this.searchTerm);
       });
@@ -308,7 +308,9 @@ async function listarLibros() {
 
 async function prestarLibro(id) {
   try {
-    const response = await fetch(`/prestar/${id}`);
+    const response = await fetch(`/prestar/${id}`,{
+        method: "PUT"
+    });
     if (!response.ok) {
       throw new Error(`Error HTTP! estado: ${response.status}`);
     }
@@ -328,7 +330,9 @@ async function prestarLibro(id) {
 
 async function devolverLibro(id) {
   try {
-    const response = await fetch(`/devolver/${id}`);
+    const response = await fetch(`/devolver/${id}`,{
+        method: "PUT"
+    });
     if (!response.ok) {
       throw new Error(`Error HTTP! estado: ${response.status}`);
     }
@@ -385,6 +389,10 @@ function ocultarCanvas() {
   }, 300); // 300ms es la duración de la transición, debe coincidir
 }
 
+//Declarar las variables fuera
+let formulario;
+let formData;
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const formulario = document.getElementById('myForm');
@@ -431,8 +439,8 @@ async function buscarLibroPorIsbn(isbn) {
     if (data.success) {            
       document.getElementById("autor").value = data.autor;
       document.getElementById("titulo").value = data.titulo;
-      const selectDisponible = document.getElementById("disponible");
-      selectDisponible.value = data.disponible ? "true" : "false";
+      //const selectDisponible = document.getElementById("disponible");
+      //selectDisponible.value = data.disponible ? "true" : "false";
     }
   } catch (error) {
     mostrarToast("Error al buscar el libro:", error);
@@ -461,7 +469,6 @@ function mostrarToast(texto) {
   toastContainer.style.opacity = "0";
   toastContainer.style.transition = "opacity 0.5s ease-in-out";
   toastContainer.style.boxShadow = "0 4px 8px rgba(229, 231, 235, 0.8)";
-  
 
   // Crear el texto del toast
   const toastText = document.createElement("p");
@@ -492,8 +499,6 @@ function mostrarToast(texto) {
   // Ocultar el toast después de 3 segundos
   setTimeout(() => {
     toastContainer.style.opacity = "0";
-    setTimeout(() => {
-      document.body.removeChild(toastContainer);
-    }, 500);
+    ;
   }, 3000);
 }

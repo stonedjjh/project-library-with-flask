@@ -8,6 +8,9 @@ Funcionalidades:
 """
 import json
 
+# Variable global para incrementar el ID de los libros.
+ID_COUNTER = 0
+
 # se define la clase libro
 class Libro:
     """
@@ -18,6 +21,7 @@ class Libro:
         autor (str): El autor del libro.
         isbn (str): El ISBN del libro.
         disponible (bool): Indica si el libro está disponible para préstamo.
+        id (int): El id del libro.
     """
 
     def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool):
@@ -25,6 +29,9 @@ class Libro:
         (Libro, str, str, bool) -> None
         Inicializa un libro con su título, autor, idbn y disponibilidad.
         """
+        global ID_COUNTER
+        ID_COUNTER += 1
+        self.id = ID_COUNTER
         self.titulo = titulo
         self.autor = autor
         self.isbn = isbn
@@ -55,28 +62,6 @@ class Libro:
         """
         return self.isbn
 
-    def get_info(self):
-        """
-        (Libro) -> str
-        Devuelve la información del libro.
-        """
-        return (
-            f"El libro {self.titulo} de {self.autor} con isbn {self.isbn} "
-            f"{'está disponible' if self.disponible else 'no está disponible'}."
-        )
-
-
-    def mostrar_info(self):
-        """
-        (Libro) -> str
-        Devuelve la información del libro.
-        """
-        print(
-            f"El libro {self.titulo} de {self.autor} con isbn {self.isbn} "
-            f"{'está disponible' if self.disponible else 'no está disponible'}."
-        )
-
-
 # definimos la clase biblioteca que tiene una lista de libros
 class Biblioteca:
     """
@@ -100,36 +85,17 @@ class Biblioteca:
         """
         self.libros.append(libro)
 
-    def agregar_libro(self):
-        """
-        (biblioteca) -> None
-        Agrega un libro a la biblioteca.
-        """
-        titulo = input("Ingrese el título del libro: ")
-        autor = input("Ingrese el autor del libro: ")
-        isbn = input("Ingrese el isbn del libro: ")
-        disponible = input("El libro está disponible? (s/n): ")
-        disponible = disponible == "s"
-        try:
-            self.libros.append(Libro(titulo, autor, isbn, disponible))
-        except ValueError as e:
-            print(f"Error en los datos del libro: {e}")
-        except TypeError as e:
-            print(f"Error en el tipo de dato: {e}")
-
     def prestar_libro(self, libro_id: int):
         """
         (biblioteca, int) -> bool or None
         Presta un libro de la biblioteca mediante su ID.
         """
         try:
-            if 0 <= libro_id < len(self.libros):
-                libro= self.libros[libro_id]
-                if libro.get_disponibilidad():
-                    libro.cambiar_disponibilidad()
-                    return True
-                return False
-            return None
+            libro= self.buscar_libro_por_id(libro_id)
+            if libro.get_disponibilidad():
+                libro.cambiar_disponibilidad()
+                return True
+            return False
         except IndexError:
             print("Error: Índice fuera de rango al prestar el libro.")
             return None
@@ -140,13 +106,11 @@ class Biblioteca:
         Devuelve un libro a la biblioteca.
         """
         try:
-            if 0 <= libro_id < len(self.libros):
-                libro = self.libros[libro_id]
-                if not libro.get_disponibilidad():
-                    libro.cambiar_disponibilidad()
-                    return True
-                return False
-            return None
+            libro= self.buscar_libro_por_id(libro_id)
+            if not libro.get_disponibilidad():
+                libro.cambiar_disponibilidad()
+                return True
+            return False
         except IndexError:
             print("Error: Índice fuera de rango al devolver el libro.")
             return None
@@ -158,10 +122,10 @@ class Biblioteca:
         """
         if len(self.libros) > 0:
             libros_data = []
-            for index, libro in enumerate(self.libros):
+            for libro in self.libros:
                 libros_data.append(
                     {
-                        "id": index,
+                        "id": libro.id,
                         "titulo": libro.titulo,
                         "autor": libro.autor,
                         "isbn": libro.isbn,
@@ -173,12 +137,15 @@ class Biblioteca:
         # Devolver un json con el mensaje de error.
         return json.dumps({"message": "No hay libros en la biblioteca."})
 
-    def buscar_libro(self, isbn: str):
+    def buscar_libro_por_id(self, libro_id: int):
         """
-        (biblioteca, str) -> list
-        Busca un libro por su isbn.
+        (biblioteca, int) -> Libro or None
+        Busca un libro por su ID, coincidiendo exactamente con el ID pasado como parámetro.
         """
-        return list(filter(lambda self: isbn in self.isbn, self.libros))
+        for libro in self.libros:
+            if libro.id == libro_id:
+                return libro
+        return None
 
     def buscar_libro_exacto(self, isbn: str):
         """
@@ -189,6 +156,7 @@ class Biblioteca:
             if libro.isbn == isbn:
                 return json.dumps(
                     {
+                        "id":libro.id,
                         "titulo": libro.titulo,
                         "autor": libro.autor,
                         "isbn": libro.isbn,

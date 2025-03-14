@@ -1,0 +1,27 @@
+name: biblioteca
+services:
+  book-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.book
+    container_name: book-service
+    ports:
+      - "5001:5001"
+    networks:
+      - myNetwork
+
+  bff:
+    build:
+      context: .
+      dockerfile: Dockerfile.bff
+    container_name: bff
+    ports:
+      - "10000:10000"
+    networks:
+      - myNetwork
+    depends_on:
+      - book-service
+
+networks:
+  myNetwork:
+    driver: bridge # Especifica explícitamente el driver bridge
