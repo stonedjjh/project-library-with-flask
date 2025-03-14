@@ -1,4 +1,4 @@
-# Sistema de Gestión de Biblioteca
+#Sistema de Gestión de Biblioteca
 
 **Versión:** 1.0
 
