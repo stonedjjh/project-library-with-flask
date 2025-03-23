@@ -5,6 +5,7 @@ on:
       branches: [main]
       paths:
         - 'book_service/**'
+    workflow_dispatch: # Agrega este desencadenante
     pull_request:
       branches: [main]
       paths:
