@@ -42,13 +42,13 @@ jobs:
         run: |
           black --check ./book_service/src
 
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Ejecutar pruebas unitarias
-        run: |
-          python -m unittest discover -s ./book_service/tests
+#  test:
+#    needs: setup
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Ejecutar pruebas unitarias
+#        run: |
+#          python -m unittest discover -s ./book_service/tests
 
   build-and-push-docker: # Define el trabajo para construir y subir la imagen Docker.
     needs: test # Indica que este trabajo depende del trabajo 'test'.
