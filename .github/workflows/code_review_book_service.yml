@@ -51,7 +51,7 @@ jobs:
 #          python -m unittest discover -s ./book_service/tests
 
   build-and-push-docker: # Define el trabajo para construir y subir la imagen Docker.
-    needs: test # Indica que este trabajo depende del trabajo 'test'.
+#   needs: test # Indica que este trabajo depende del trabajo 'test'.
     runs-on: ubuntu-latest # Especifica que el trabajo se ejecutará en una máquina virtual Ubuntu.
     steps: # Define los pasos para construir y subir la imagen.
         - uses: actions/checkout@v4 # Clona el repositorio para acceder al Dockerfile y al código.
