@@ -5,16 +5,16 @@ FROM python:3.11-slim-buster
 WORKDIR /app
 
 # Copia los archivos de requirements para instalar las dependencias
-COPY book_service/requirements.txt .
+COPY requirements.txt .
 
 # Instala las dependencias
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el resto de archivos de la aplicacion al contenedor
-COPY book_service .
+# Copia la carpeta src al contenedor
+COPY src /app/src
 
-# Expone el puerto en el que el microservicio escuchará
-EXPOSE 5001
+# Expone el puerto en el que el BFF escuchará
+EXPOSE 10000
 
 # Define el comando para ejecutar la aplicacion
-CMD ["python", "app.py"]
+CMD ["python", "/app/src/app.py"]

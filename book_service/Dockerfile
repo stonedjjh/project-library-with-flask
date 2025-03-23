@@ -10,11 +10,12 @@ COPY requirements.txt .
 # Instala las dependencias
 RUN pip install -r requirements.txt
 
-# Copia el resto de archivos de la aplicacion al contenedor
-COPY . .
+# Copia la carpeta src al contenedor
+COPY src /app/src
 
-# Expone el puerto en el que el BFF escuchará
-EXPOSE 10000
+
+# Expone el puerto en el que el microservicio escuchará
+EXPOSE 5001
 
 # Define el comando para ejecutar la aplicacion
-CMD ["python", "app.py"]
+CMD ["python", "/app/src/app.py"]

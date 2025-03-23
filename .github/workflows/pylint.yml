@@ -1,6 +1,9 @@
-name: Pylint
+name: Pylint, Docker, Pruebas Unitarias
 
-on: [push]
+push:
+  branches: [main]
+pull_request:
+  branches: [main]
 
 jobs:
   build:

@@ -8,9 +8,6 @@ Funcionalidades:
 """
 import json
 
-# Variable global para incrementar el ID de los libros.
-ID_COUNTER = 0
-
 # se define la clase libro
 class Libro:
     """
@@ -23,15 +20,15 @@ class Libro:
         disponible (bool): Indica si el libro está disponible para préstamo.
         id (int): El id del libro.
     """
+    ID_COUNTER = 0  # Atributo estático para el contador de IDs
 
     def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool):
         """
         (Libro, str, str, bool) -> None
         Inicializa un libro con su título, autor, idbn y disponibilidad.
         """
-        global ID_COUNTER
-        ID_COUNTER += 1
-        self.id = ID_COUNTER
+        Libro.ID_COUNTER += 1  # Se incrementa el contador de la clase
+        self.id = Libro.ID_COUNTER  # Se asigna el ID al libro
         self.titulo = titulo
         self.autor = autor
         self.isbn = isbn

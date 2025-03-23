@@ -1,0 +1,64 @@
+name: Revisión de código book-service
+
+on:
+    push:
+      branches: [main]
+      paths:
+        - 'book_service/**'
+    pull_request:
+      branches: [main]
+      paths:
+        - 'book_service/**'
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      python-version: ${{ steps.python-version.outputs.python-version }} # Pasa la versión de Python configurada en el paso 'Configurar Python' a los trabajos dependientes.
+    steps:
+      - uses: actions/checkout@v4 # Clona el repositorio para que los trabajos puedan acceder al código.
+      - name: Configurar Python
+        id: python-version
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint black unittest
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar Pylint
+        run: |
+          pylint ./book_service/src
+
+  format:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar Black
+        run: |
+          black --check ./book_service/src
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar pruebas unitarias
+        run: |
+          python -m unittest discover -s ./book_service/tests
+
+  build-and-push-docker: # Define el trabajo para construir y subir la imagen Docker.
+    needs: test # Indica que este trabajo depende del trabajo 'test'.
+    runs-on: ubuntu-latest # Especifica que el trabajo se ejecutará en una máquina virtual Ubuntu.
+    steps: # Define los pasos para construir y subir la imagen.
+        - uses: actions/checkout@v4 # Clona el repositorio para acceder al Dockerfile y al código.
+        - name: Iniciar sesión en GitHub Container Registry # Inicia sesión en el registro de contenedores de GitHub.
+          run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin # Utiliza un secreto para la autenticación.
+        - name: Construir y etiquetar la imagen Docker # Construye la imagen Docker y la etiqueta.
+          run: docker build -t ghcr.io/${{ github.repository }}/book-service:latest -f ./book_service/Dockerfile . # Utiliza el Dockerfile en 'book_service' y etiqueta la imagen.
+        - name: Subir la imagen Docker a GitHub Container Registry # Sube la imagen Docker al registro.
+          run: docker push ghcr.io/${{ github.repository }}/book-service:latest # Envía la imagen al registro de contenedores.
+

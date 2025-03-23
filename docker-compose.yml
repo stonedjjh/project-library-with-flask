@@ -2,26 +2,26 @@ name: biblioteca
 services:
   book-service:
     build:
-      context: .
-      dockerfile: Dockerfile.book
-    container_name: book-service
+      context: ./book_service # Contexto de construcción es el directorio book_service
+      dockerfile: Dockerfile # Ruta al Dockerfile dentro de book_service
+    container_name: book-service # Nombre del contenedor
     ports:
-      - "5001:5001"
+      - "5001:5001" # Mapea el puerto 5001 del host al puerto 5001 del contenedor
     networks:
-      - myNetwork
+      - myNetwork # Conecta el contenedor a la red myNetwork
 
   bff:
     build:
-      context: .
-      dockerfile: Dockerfile.bff
-    container_name: bff
+      context: ./bff # Contexto de construcción es el directorio bff
+      dockerfile: Dockerfile # Ruta al Dockerfile dentro de bff
+    container_name: bff # Nombre del contenedor
     ports:
-      - "10000:10000"
+      - "10000:10000" # Mapea el puerto 10000 del host al puerto 10000 del contenedor
     networks:
-      - myNetwork
+      - myNetwork # Conecta el contenedor a la red myNetwork
     depends_on:
-      - book-service
+      - book-service # Especifica que bff depende de book-service
 
 networks:
   myNetwork:
-    driver: bridge # Especifica explícitamente el driver bridge
+    driver: bridge # Especifica el driver de red bridge
