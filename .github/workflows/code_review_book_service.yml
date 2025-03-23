@@ -11,34 +11,26 @@ on:
       paths:
         - 'book_service/**'
 jobs:
-  setup:
+  lint:
     runs-on: ubuntu-latest
-    outputs:
-      python-version: ${{ steps.python-version.outputs.python-version }} # Pasa la versión de Python configurada en el paso 'Configurar Python' a los trabajos dependientes.
     steps:
       - uses: actions/checkout@v4 # Clona el repositorio para que los trabajos puedan acceder al código.
-      - name: Configurar Python
-        id: python-version
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.11"
-      - name: Instalar dependencias
+      - name: Configurar Python e instalar Pylint # Combinamos la configuración y la instalación
         run: |
           python -m pip install --upgrade pip
-          pip install pylint black
-
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
+          pip install pylint
       - name: Ejecutar Pylint
         run: |
           pylint ./book_service/src
 
   format:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Configurar Python e instalar Black # Combinamos la configuración y la instalación
+        run: |
+          python -m pip install --upgrade pip
+          pip install black
       - name: Ejecutar Black
         run: |
           black --check ./book_service/src
