@@ -48,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest # Especifica que el trabajo se ejecutará en una máquina virtual Ubuntu.
     steps: # Define los pasos para construir y subir la imagen.
         - uses: actions/checkout@v4 # Clona el repositorio para acceder al Dockerfile y al código.
+        - name: Depurar nombre del repositorio
+          run: echo "Nombre del repositorio:" ${{ github.repository }} 
         - name: Iniciar sesión en GitHub Container Registry # Inicia sesión en el registro de contenedores de GitHub.
           run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin # Utiliza un secreto para la autenticación.
         - name: Construir y etiquetar la imagen Docker # Construye la imagen Docker y la etiqueta.
