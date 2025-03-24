@@ -56,3 +56,10 @@ jobs:
           run: docker build -t ghcr.io/${{ github.repository }}/book-service:latest -f ./book_service/Dockerfile . # Utiliza el Dockerfile en 'book_service' y etiqueta la imagen.
         - name: Subir la imagen Docker a GitHub Container Registry # Sube la imagen Docker al registro.
           run: docker push ghcr.io/${{ github.repository }}/book-service:latest # Envía la imagen al registro de contenedores.
+  
+  deploy-to-render: # Nuevo trabajo para el despliegue en Render.
+    needs: build-and-push-docker # Indica que este trabajo depende de 'build-and-push-docker'.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Activar redespliegue en Render
+        run: curl -X POST "${{ secrets.RENDER_PAT }}"
