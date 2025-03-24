@@ -5,7 +5,7 @@ FROM python:3.11-slim-buster
 WORKDIR /app
 
 # Copia los archivos de requirements para instalar las dependencias
-COPY requirements.txt .
+COPY bff/requirements.txt .
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
