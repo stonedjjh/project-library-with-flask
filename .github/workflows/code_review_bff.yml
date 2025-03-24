@@ -56,17 +56,3 @@ jobs:
           run: docker build -t ghcr.io/${{ github.repository }}/biblioteca-bff:latest -f ./bff/Dockerfile . # Utiliza el Dockerfile en 'book_service' y etiqueta la imagen.
         - name: Subir la imagen Docker a GitHub Container Registry # Sube la imagen Docker al registro.
           run: docker push ghcr.io/${{ github.repository }}/biblioteca-bff:latest # Envía la imagen al registro de contenedores.
-
-  set-package-visibility:
-    runs-on: ubuntu-latest
-    needs: build-and-push-docker
-    steps:
-      - name: Establecer visibilidad del paquete como pública
-        env:
-          GH_TOKEN: ${{ secrets.CR_PAT }}
-        run: |
-          curl -X PATCH \
-          -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token $GH_TOKEN" \
-          https://api.github.com/orgs/${{ github.repository_owner }}/packages/container/${{ github.repository }}/biblioteca-bff/visibility \
-          -d '{"visibility":"public"}'
