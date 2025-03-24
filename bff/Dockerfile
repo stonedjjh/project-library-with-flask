@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia la carpeta src al contenedor
-COPY src /app/src
+COPY bff/src /app/src
 
 # Expone el puerto en el que el BFF escuchará
 EXPOSE 10000
