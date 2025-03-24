@@ -25,9 +25,9 @@ app = Flask(__name__)
 # URL base del microservicio de libros
 #URL_BASE_BOOK_SERVICE = "http://127.0.0.1:5001/api/v1/libros"
 #local
-URL_BASE_BOOK_SERVICE = "http://book-service:5001/api/v1/libros"
+#URL_BASE_BOOK_SERVICE = "http://book-service:5001/api/v1/libros"
 #servidor
-#URL_BASE_BOOK_SERVICE = "https://book-service-99lq.onrender.com/api/v1/libros"
+URL_BASE_BOOK_SERVICE = "https://book-service-99lq.onrender.com/api/v1/libros"
 
 
 @app.route("/")
