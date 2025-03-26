@@ -17,16 +17,18 @@ import requests
 try:
     from flask import Flask, request, jsonify, render_template
 except ImportError:
-    print("Error: Flask no está instalado. Por favor, instálalo con 'pip install Flask'")
+    print(
+        "Error: Flask no está instalado. Por favor, instálalo con 'pip install Flask'"
+    )
     sys.exit(1)
 
 app = Flask(__name__)
 
 # URL base del microservicio de libros
-#URL_BASE_BOOK_SERVICE = "http://127.0.0.1:5001/api/v1/libros"
-#local
-#URL_BASE_BOOK_SERVICE = "http://book-service:5001/api/v1/libros"
-#servidor
+# URL_BASE_BOOK_SERVICE = "http://127.0.0.1:5001/api/v1/libros"
+# local
+# URL_BASE_BOOK_SERVICE = "http://book-service:5001/api/v1/libros"
+# servidor
 URL_BASE_BOOK_SERVICE = "https://book-service-99lq.onrender.com/api/v1/libros"
 
 
@@ -176,5 +178,5 @@ def buscar(libro_isbn):
     return buscar_libro_por_isbn(libro_isbn)
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000, debug=True)
+# if __name__ == "__main__":
+#    app.run(host="0.0.0.0", port=10000, debug=True)

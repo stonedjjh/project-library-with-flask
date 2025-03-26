@@ -6,7 +6,9 @@ Funcionalidades:
 - Almacenamiento y recuperación de información de libros.
 - ... (otras funcionalidades)
 """
+
 import json
+
 
 # se define la clase libro
 class Libro:
@@ -20,6 +22,7 @@ class Libro:
         disponible (bool): Indica si el libro está disponible para préstamo.
         id (int): El id del libro.
     """
+
     ID_COUNTER = 0  # Atributo estático para el contador de IDs
 
     def __init__(self, titulo: str, autor: str, isbn: str, disponible: bool):
@@ -59,6 +62,7 @@ class Libro:
         """
         return self.isbn
 
+
 # definimos la clase biblioteca que tiene una lista de libros
 class Biblioteca:
     """
@@ -88,7 +92,7 @@ class Biblioteca:
         Presta un libro de la biblioteca mediante su ID.
         """
         try:
-            libro= self.buscar_libro_por_id(libro_id)
+            libro = self.buscar_libro_por_id(libro_id)
             if libro.get_disponibilidad():
                 libro.cambiar_disponibilidad()
                 return True
@@ -103,7 +107,7 @@ class Biblioteca:
         Devuelve un libro a la biblioteca.
         """
         try:
-            libro= self.buscar_libro_por_id(libro_id)
+            libro = self.buscar_libro_por_id(libro_id)
             if not libro.get_disponibilidad():
                 libro.cambiar_disponibilidad()
                 return True
@@ -153,13 +157,13 @@ class Biblioteca:
             if libro.isbn == isbn:
                 return json.dumps(
                     {
-                        "id":libro.id,
+                        "id": libro.id,
                         "titulo": libro.titulo,
                         "autor": libro.autor,
                         "isbn": libro.isbn,
-                        "disponible": libro.disponible,   
-                        "success":True
+                        "disponible": libro.disponible,
+                        "success": True,
                     },
-                    indent=4
+                    indent=4,
                 )
         return json.dumps({"message": "No se encontró el libro."}, indent=4)
