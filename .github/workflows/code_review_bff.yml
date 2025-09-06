@@ -51,7 +51,8 @@ jobs:
 #   needs: test # Indica que este trabajo depende del trabajo 'test'.
     runs-on: ubuntu-latest # Especifica que el trabajo se ejecutará en una máquina virtual Ubuntu.
     permissions:
-      contents: write # Otorgamos permiso de escritura
+      contents: read
+      packages: write
     steps: # Define los pasos para construir y subir la imagen.
         - uses: actions/checkout@v4 # Clona el repositorio para acceder al Dockerfile y al código.
         - name: Depurar nombre del repositorio
